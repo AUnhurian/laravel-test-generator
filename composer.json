@@ -1,0 +1,17 @@
+{
+    "name": "aunhurian/laravel-test-generator",
+    "description": "This package",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "AUnhurian",
+            "email": "andriy.unhurian@ukr.netd"
+        }
+    ],
+    "autoload": {
+        "AUnhurian\\LaravelTestGenerator\\": "src/"
+    },
+    "require": {
+    }
+}

@@ -1,0 +1,10 @@
+<?php
+
+namespace Tests\{{ namespace }};
+
+use Tests\TestCase;
+
+class {{ class }}Test extends TestCase
+{
+{{ functions }}
+}
