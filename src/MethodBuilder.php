@@ -42,7 +42,7 @@ class MethodBuilder
         }
 
         $template = '$%s = $this->mock(%s::class);';
-        if ($typeTest->value === FormatorTypes::UNIT->value) {
+        if ($typeTest->value === FormatorTypes::FEATURE->value) {
             $template = '$%s = $this->app->make(%s::class);';
         }
 

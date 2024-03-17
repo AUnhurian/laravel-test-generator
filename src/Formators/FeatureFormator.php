@@ -11,10 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FeatureFormator extends Formator implements FormatorInterface
 {
-    public function buildSetUpMethod(): void
-    {
-    }
-
     public function buildMethods(): void
     {
         $methods = $this->reflectionClass->getMethods();

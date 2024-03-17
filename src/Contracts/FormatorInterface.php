@@ -29,6 +29,5 @@ interface FormatorInterface
         string $defaultValue = null
     ): void;
 
-    public function buildSetUpMethod(): void;
     public function buildMethods(): void;
 }

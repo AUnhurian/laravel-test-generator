@@ -8,20 +8,6 @@ use AUnhurian\LaravelTestGenerator\MethodBuilder;
 
 class UnitFormator extends Formator implements FormatorInterface
 {
-    public function buildSetUpMethod(): void
-    {
-        $methodName = 'setUp';
-        $this->methodBuilder->addCode('parent::setUp();');
-
-        $method = $this->methodBuilder->buildMethod(
-            MethodBuilder::METHOD_ACCESS_PROTECTED,
-            'setUp',
-            MethodBuilder::RETURN_TYPE_VOID
-        );
-
-        $this->addFunction($methodName, $method);
-    }
-
     public function buildMethods(): void
     {
         $methods = $this->reflectionClass->getMethods();
@@ -74,7 +60,6 @@ class UnitFormator extends Formator implements FormatorInterface
         foreach ($parameters as $parameter) {
             $parametersBody[] = sprintf('$%s', $parameter->getName());
         }
-
 
         $this->methodBuilder->addCode(
             sprintf('%s$%s->%s(%s);',

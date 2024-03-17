@@ -6,6 +6,7 @@ use AUnhurian\LaravelTestGenerator\Enums\FormatorTypes;
 use AUnhurian\LaravelTestGenerator\Exceptions\ClassNotExistException;
 use AUnhurian\LaravelTestGenerator\Formators\FormatorFactory;
 use AUnhurian\LaravelTestGenerator\Generator;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 
@@ -25,6 +26,7 @@ class GenerateTestCommand extends Command
         $class = $this->argument('class');
 
         if (!class_exists($class)) {
+            dd($class);
             throw new ClassNotExistException($class);
         }
 
@@ -50,7 +52,13 @@ class GenerateTestCommand extends Command
 
         $generator = new Generator($this->files, $formator, $class, $this->option('override'));
 
-        $testPath = $generator->generate();
+        try {
+            $testPath = $generator->generate();
+        } catch (Exception $exception) {
+            $this->output->error($exception->getMessage());
+
+            return;
+        }
 
         $this->output->success(
             "The {$type->value} test was generated for {$class}. Path: {$testPath}"

@@ -24,7 +24,6 @@ class Generator
         $this->formator->setTemplate();
         $this->formator->setClassReflection($this->classPath);
 
-        $this->formator->buildSetUpMethod();
         $this->formator->buildMethods();
 
         $this->completeTestTemplate();
