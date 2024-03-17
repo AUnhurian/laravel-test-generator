@@ -24,6 +24,14 @@ You can use the `override` option to overwrite existing test files.
 php artisan test:generate "\App\Http\Controllers\IndexController" --feature --unit --override
 ```
 
+**You can also publish the configuration file using the following command:**
+
+```bash
+php artisan vendor:publish --tag=test-generator --force
+```
+
+Create the own formator for the test generator and set that class in config `test-generator`. You need to implement the `AUnhurian\LaravelTestGenerator\Contracts\FormatorInterface` interface.
+
 ## Example
 You have a controller `IndexController` with the following methods:
 
