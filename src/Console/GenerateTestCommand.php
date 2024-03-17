@@ -2,27 +2,17 @@
 
 namespace AUnhurian\LaravelTestGenerator\Console;
 
-use AUnhurian\LaravelTestGenerator\Contracts\FormatorInterface;
 use AUnhurian\LaravelTestGenerator\Exceptions\ClassNotExistException;
-use AUnhurian\LaravelTestGenerator\Exceptions\FormatorClassNotFoundException;
-use AUnhurian\LaravelTestGenerator\Exceptions\InvalidFormatorClassException;
-use AUnhurian\LaravelTestGenerator\Exceptions\WrongTestTypeException;
+use AUnhurian\LaravelTestGenerator\Formators\FormatorFactory;
 use AUnhurian\LaravelTestGenerator\Generator;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 
 class GenerateTestCommand extends Command
 {
-    protected $signature = 'test:generate {class} {--feature} {--unit}';
+    protected $signature = 'test:generate {class} {--feature} {--unit} {--override}';
 
     protected $description = 'This command for generate test';
-
-    private const TEST_TYPE_FEATURE = 'feature';
-    private const TEST_TYPE_UNIT = 'unit';
-    private const TEST_TYPES = [
-        self::TEST_TYPE_UNIT,
-        self::TEST_TYPE_FEATURE,
-    ];
 
     public function __construct(private readonly Filesystem $files)
     {
@@ -44,44 +34,25 @@ class GenerateTestCommand extends Command
         }
 
         if ($this->option('unit')) {
-            $this->generate(self::TEST_TYPE_FEATURE, $class);
+            $this->generate(FormatorFactory::TEST_TYPE_UNIT, $class);
         }
 
         if ($this->option('feature')) {
-            $this->generate(self::TEST_TYPE_FEATURE, $class);
+            $this->generate(FormatorFactory::TEST_TYPE_FEATURE, $class);
         }
     }
 
     private function generate(string $type, string $class): void
     {
-        $formator = $this->getFormator($type);
-        $generator = new Generator($this->files, $formator, $class);
+        $formatorFactory = new FormatorFactory();
+        $formator =  $formatorFactory->createFormator($type);
+
+        $generator = new Generator($this->files, $formator, $class, $this->option('override'));
 
         $testPath = $generator->generate();
 
         $this->output->success(
             "The {$type} test was generated for {$class}. Path: {$testPath}"
         );
-    }
-
-    private function getFormator(string $type = self::TEST_TYPE_UNIT): FormatorInterface
-    {
-        if (! in_array($type, self::TEST_TYPES)) {
-            throw new WrongTestTypeException($type);
-        }
-
-        $className = config("test-generator.formators.{$type}");
-
-        if (!class_exists($className)) {
-            throw new FormatorClassNotFoundException($className);
-        }
-
-        $formatorInstance = app($className);
-
-        if (! $formatorInstance instanceof FormatorInterface) {
-            throw new InvalidFormatorClassException($formatorInstance);
-        }
-
-        return $formatorInstance;
     }
 }

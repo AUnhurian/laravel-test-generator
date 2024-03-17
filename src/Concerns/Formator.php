@@ -2,42 +2,66 @@
 
 namespace AUnhurian\LaravelTestGenerator\Concerns;
 
+use AUnhurian\LaravelTestGenerator\Concerns\ClassTemplate\CompleteClassTrait;
+use AUnhurian\LaravelTestGenerator\Concerns\ClassTemplate\CompleteFunctionsTrait;
+use AUnhurian\LaravelTestGenerator\Concerns\ClassTemplate\CompleteNamespaceTrait;
+use AUnhurian\LaravelTestGenerator\Concerns\ClassTemplate\CompleteUseTrait;
 use AUnhurian\LaravelTestGenerator\Contracts\FormatorInterface;
+use AUnhurian\LaravelTestGenerator\Helper;
+use AUnhurian\LaravelTestGenerator\MethodBuilder;
+use ReflectionClass;
 
 abstract class Formator implements FormatorInterface
 {
-    private const STUB_CLASS_NAME = 'test-class.stub';
-    private const STUB_FUNCTION_NAME = 'test-function.stub';
+    use CompleteUseTrait;
+    use CompleteNamespaceTrait;
+    use CompleteClassTrait;
+    use CompleteFunctionsTrait;
 
-    public function getClassStubPath(): string
+    private string $template = '';
+
+    protected array $usingClasses = [];
+    protected array $functions = [];
+    protected array $properties = [];
+
+    protected ReflectionClass $reflectionClass;
+
+    public const STUB_CLASS_NAME = 'test-class.stub';
+    public const STUB_FUNCTION_NAME = 'test-function.stub';
+    protected string $classPath;
+
+    protected MethodBuilder $methodBuilder;
+
+    public function __construct(private string $type)
     {
-        return $this->getStubPath(self::STUB_CLASS_NAME);
+        $this->methodBuilder = new MethodBuilder();
     }
 
-    public function getFunctionStubPath(): string
+    public function setTemplate(): void
     {
-        return $this->getStubPath(self::STUB_FUNCTION_NAME);
+        $content = Helper::getStubClassContent();
+
+        $this->template = $content;
     }
 
-    private function getStubPath(string $stubFileName): string
+    public function getTemplate(): string
     {
-        $stubPath = $this->getStubDirPath() . '/' . $stubFileName;
-
-        if (file_exists($stubPath)) {
-            return $stubPath;
-        }
-
-        return __DIR__ . '/../../stubs/' . $stubFileName;
+        return $this->template;
     }
 
-    private function getStubDirPath(): string
+    public function setClassReflection($classPath): void
     {
-        $stubsBasePath = base_path('stubs');
+        $this->classPath = $classPath;
+        $this->reflectionClass = new ReflectionClass($classPath);
+    }
 
-        if (is_dir($stubsBasePath)) {
-            return $stubsBasePath;
-        }
+    public function prepareTestClassPath(): string
+    {
+        $testsPath = 'tests\\' . ucfirst($this->type) . '\\';
+        $path = str_replace(['App\\', '\\App\\'], $testsPath, $this->classPath);
 
-        return __DIR__ . '/../../stubs';
+        $path = str_replace('\\', '/', $path);
+
+        return base_path($path . 'Test.php');
     }
 }

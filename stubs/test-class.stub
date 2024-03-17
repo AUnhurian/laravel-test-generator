@@ -1,7 +1,7 @@
 <?php
 
-namespace Tests\{{ namespace }};
-
+namespace {{ namespace }};
+{{ use_class }}
 use Tests\TestCase;
 
 class {{ class }}Test extends TestCase

@@ -1,5 +1,4 @@
-
-    public function test{{ name }}(): void
+    {{ method_access }} function {{ name }}(){{ return_type }}
     {
         {{ body }}
     }
