@@ -1,6 +1,6 @@
 {
     "name": "aunhurian/laravel-test-generator",
-    "description": "This package",
+    "description": "The package for generating tests for Laravel models, controllers, and requests.",
     "minimum-stability": "stable",
     "license": "MIT",
     "authors": [
@@ -13,6 +13,8 @@
         "AUnhurian\\LaravelTestGenerator\\": "src/"
     },
     "require": {
+        "php": "^8.1",
+        "laravel/framework": "^10.0"
     },
     "extra": {
         "module": {
