@@ -4,6 +4,7 @@ namespace AUnhurian\LaravelTestGenerator\Formators;
 
 use AUnhurian\LaravelTestGenerator\Concerns\Formator;
 use AUnhurian\LaravelTestGenerator\Contracts\FormatorInterface;
+use AUnhurian\LaravelTestGenerator\Enums\FormatorTypes;
 use AUnhurian\LaravelTestGenerator\MethodBuilder;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -112,11 +113,11 @@ class FeatureFormator extends Formator implements FormatorInterface
 
         $this->methodBuilder->setParameters(
             $this->reflectionClass->getConstructor()?->getParameters() ?? [],
-            FormatorFactory::TEST_TYPE_FEATURE
+                FormatorTypes::FEATURE
         );
         $this->methodBuilder->setParameters(
             $parameters,
-            FormatorFactory::TEST_TYPE_FEATURE
+            FormatorTypes::FEATURE
         );
         $this->createMockOfClass();
         $this->addUse($this->reflectionClass->getName());

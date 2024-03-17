@@ -1,9 +1,11 @@
 <?php
 
+use AUnhurian\LaravelTestGenerator\Enums\FormatorTypes;
+
 return [
     'formators' => [
-        'feature' => \AUnhurian\LaravelTestGenerator\Formators\FeatureFormator::class,
-        'unit' => \AUnhurian\LaravelTestGenerator\Formators\UnitFormator::class,
+        FormatorTypes::FEATURE->value => \AUnhurian\LaravelTestGenerator\Formators\FeatureFormator::class,
+        FormatorTypes::UNIT->value => \AUnhurian\LaravelTestGenerator\Formators\UnitFormator::class,
     ],
     'list_methods' => [
         'exclude' =>   [

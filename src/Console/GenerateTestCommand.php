@@ -2,6 +2,7 @@
 
 namespace AUnhurian\LaravelTestGenerator\Console;
 
+use AUnhurian\LaravelTestGenerator\Enums\FormatorTypes;
 use AUnhurian\LaravelTestGenerator\Exceptions\ClassNotExistException;
 use AUnhurian\LaravelTestGenerator\Formators\FormatorFactory;
 use AUnhurian\LaravelTestGenerator\Generator;
@@ -34,15 +35,15 @@ class GenerateTestCommand extends Command
         }
 
         if ($this->option('unit')) {
-            $this->generate(FormatorFactory::TEST_TYPE_UNIT, $class);
+            $this->generate(FormatorTypes::UNIT, $class);
         }
 
         if ($this->option('feature')) {
-            $this->generate(FormatorFactory::TEST_TYPE_FEATURE, $class);
+            $this->generate(FormatorTypes::FEATURE, $class);
         }
     }
 
-    private function generate(string $type, string $class): void
+    private function generate(FormatorTypes $type, string $class): void
     {
         $formatorFactory = new FormatorFactory();
         $formator =  $formatorFactory->createFormator($type);
@@ -52,7 +53,7 @@ class GenerateTestCommand extends Command
         $testPath = $generator->generate();
 
         $this->output->success(
-            "The {$type} test was generated for {$class}. Path: {$testPath}"
+            "The {$type->value} test was generated for {$class}. Path: {$testPath}"
         );
     }
 }

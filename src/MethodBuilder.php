@@ -3,6 +3,7 @@
 namespace AUnhurian\LaravelTestGenerator;
 
 use AUnhurian\LaravelTestGenerator\Concerns\MethodTemplate\PrepareMethod;
+use AUnhurian\LaravelTestGenerator\Enums\FormatorTypes;
 use AUnhurian\LaravelTestGenerator\Formators\FormatorFactory;
 
 class MethodBuilder
@@ -27,7 +28,7 @@ class MethodBuilder
 
     public function addInjectionParameter(
         \ReflectionParameter $reflectionParameter,
-        string $typeTest = FormatorFactory::TEST_TYPE_UNIT
+        FormatorTypes $typeTest = FormatorTypes::UNIT
     ): MethodBuilder {
         if ($reflectionParameter->getClass() === null) {
             $this->addCode(
@@ -41,7 +42,7 @@ class MethodBuilder
         }
 
         $template = '$%s = $this->mock(%s::class);';
-        if ($typeTest === FormatorFactory::TEST_TYPE_FEATURE) {
+        if ($typeTest->value === FormatorTypes::UNIT->value) {
             $template = '$%s = $this->app->make(%s::class);';
         }
 
@@ -89,7 +90,7 @@ class MethodBuilder
 
     public function setParameters(
         array $parameters,
-        string $typeTest = FormatorFactory::TEST_TYPE_UNIT
+        FormatorTypes $typeTest = FormatorTypes::UNIT
     ): void {
         if (empty($parameters)) {
             return;

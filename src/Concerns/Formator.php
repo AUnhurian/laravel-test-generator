@@ -7,6 +7,7 @@ use AUnhurian\LaravelTestGenerator\Concerns\ClassTemplate\CompleteFunctionsTrait
 use AUnhurian\LaravelTestGenerator\Concerns\ClassTemplate\CompleteNamespaceTrait;
 use AUnhurian\LaravelTestGenerator\Concerns\ClassTemplate\CompleteUseTrait;
 use AUnhurian\LaravelTestGenerator\Contracts\FormatorInterface;
+use AUnhurian\LaravelTestGenerator\Enums\FormatorTypes;
 use AUnhurian\LaravelTestGenerator\Helper;
 use AUnhurian\LaravelTestGenerator\MethodBuilder;
 use ReflectionClass;
@@ -32,7 +33,7 @@ abstract class Formator implements FormatorInterface
 
     protected MethodBuilder $methodBuilder;
 
-    public function __construct(private string $type)
+    public function __construct(private FormatorTypes $type)
     {
         $this->methodBuilder = new MethodBuilder();
     }
@@ -57,7 +58,7 @@ abstract class Formator implements FormatorInterface
 
     public function prepareTestClassPath(): string
     {
-        $testsPath = 'tests\\' . ucfirst($this->type) . '\\';
+        $testsPath = 'tests\\' . ucfirst($this->type->value) . '\\';
         $path = str_replace(['App\\', '\\App\\'], $testsPath, $this->classPath);
 
         $path = str_replace('\\', '/', $path);

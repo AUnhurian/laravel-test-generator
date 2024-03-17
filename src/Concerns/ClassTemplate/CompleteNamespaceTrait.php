@@ -11,7 +11,7 @@ trait CompleteNamespaceTrait
 
     private function generateTestNamespace(): string
     {
-        $testsPath = 'Tests\\' . ucfirst($this->type) . '\\';
+        $testsPath = 'Tests\\' . ucfirst($this->type->value) . '\\';
         $path = str_replace(['App\\', '\\App\\'], $testsPath, $this->classPath);
 
         $classShortName = $this->reflectionClass->getShortName();

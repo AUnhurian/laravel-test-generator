@@ -13,5 +13,12 @@
         "AUnhurian\\LaravelTestGenerator\\": "src/"
     },
     "require": {
+    },
+    "extra": {
+        "module": {
+            "providers": [
+                "AUnhurian\\LaravelTestGenerator\\TestGeneratorServiceProvider"
+            ]
+        }
     }
 }
