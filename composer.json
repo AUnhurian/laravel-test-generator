@@ -10,7 +10,9 @@
         }
     ],
     "autoload": {
-        "AUnhurian\\LaravelTestGenerator\\": "src/"
+        "psr-4": {
+            "AUnhurian\\LaravelTestGenerator\\": "src/"
+        }
     },
     "require": {
         "php": "^8.1",
