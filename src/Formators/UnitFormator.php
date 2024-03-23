@@ -5,6 +5,7 @@ namespace AUnhurian\LaravelTestGenerator\Formators;
 use AUnhurian\LaravelTestGenerator\Concerns\Formator;
 use AUnhurian\LaravelTestGenerator\Contracts\FormatorInterface;
 use AUnhurian\LaravelTestGenerator\MethodBuilder;
+use ReflectionMethod;
 
 class UnitFormator extends Formator implements FormatorInterface
 {
@@ -13,6 +14,10 @@ class UnitFormator extends Formator implements FormatorInterface
         $methods = $this->reflectionClass->getMethods();
 
         foreach ($methods as $method) {
+            if ($method->getModifiers() !== ReflectionMethod::IS_PUBLIC) {
+                continue;
+            }
+
             if (in_array($method->getName(), config('test-generator.list_methods.exclude'))) {
                 continue;
             }

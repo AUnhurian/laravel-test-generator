@@ -7,6 +7,7 @@ use AUnhurian\LaravelTestGenerator\Contracts\FormatorInterface;
 use AUnhurian\LaravelTestGenerator\Enums\FormatorTypes;
 use AUnhurian\LaravelTestGenerator\MethodBuilder;
 use Illuminate\Support\Facades\Route;
+use ReflectionMethod;
 use Symfony\Component\HttpFoundation\Response;
 
 class FeatureFormator extends Formator implements FormatorInterface
@@ -16,6 +17,10 @@ class FeatureFormator extends Formator implements FormatorInterface
         $methods = $this->reflectionClass->getMethods();
 
         foreach ($methods as $method) {
+            if ($method->getModifiers() !== ReflectionMethod::IS_PUBLIC) {
+                continue;
+            }
+
             if (in_array($method->getName(), config('test-generator.list_methods.exclude'))) {
                 continue;
             }
