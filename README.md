@@ -1,3 +1,4 @@
+[![Latest Stable Version](http://poser.pugx.org/aunhurian/laravel-test-generator/v)](https://packagist.org/packages/aunhurian/laravel-test-generator) [![Total Downloads](http://poser.pugx.org/aunhurian/laravel-test-generator/downloads)](https://packagist.org/packages/aunhurian/laravel-test-generator) [![Latest Unstable Version](http://poser.pugx.org/aunhurian/laravel-test-generator/v/unstable)](https://packagist.org/packages/aunhurian/laravel-test-generator) [![License](http://poser.pugx.org/aunhurian/laravel-test-generator/license)](https://packagist.org/packages/aunhurian/laravel-test-generator) [![PHP Version Require](http://poser.pugx.org/aunhurian/laravel-test-generator/require/php)](https://packagist.org/packages/aunhurian/laravel-test-generator)
 
 # Laravel Test Generator
 Use this package to generate test files for your Laravel application, and fix the tests later.
