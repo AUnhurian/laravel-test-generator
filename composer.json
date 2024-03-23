@@ -16,7 +16,7 @@
     },
     "require": {
         "php": "^8.1",
-        "laravel/framework": "^10.0"
+        "laravel/framework": "^v8.0.0"
     },
     "extra": {
         "module": {
