@@ -4,7 +4,6 @@ namespace AUnhurian\LaravelTestGenerator;
 
 use AUnhurian\LaravelTestGenerator\Concerns\MethodTemplate\PrepareMethod;
 use AUnhurian\LaravelTestGenerator\Enums\FormatorTypes;
-use AUnhurian\LaravelTestGenerator\Formators\FormatorFactory;
 
 class MethodBuilder
 {
